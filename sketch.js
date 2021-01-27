@@ -81,9 +81,9 @@ function draw(){
 }
 
 function mouseDragged(){
-    //if (gameState!=="launched"){
+    if (gameState!=="launched"){
         Matter.Body.setPosition(bird.body, {x: mouseX , y: mouseY});
-    //}
+    }
 }
 
 
@@ -94,24 +94,29 @@ function mouseReleased(){
 
 function keyPressed(){
     if(keyCode === 32){
+        gameState="onSling"
+        bird.trajectory=[]
+        Matter.Body.setPosition(bird.body,{x:200, y:50})
        slingshot.attach(bird.body);
     }
 }
 
 async function getBackgroundImg(){
-    var response = await fetch("http://worldtimeapi.org/api/timezone/Asia/Kolkata");
+    var response = await fetch("http://worldtimeapi.org/api/timezone/Asia/Dili");
     var responseJSON = await response.json();
 
     var datetime = responseJSON.datetime;
     var hour = datetime.slice(11,13);
+    console.log(hour);
     
-    if(hour>=0600 && hour<=1900){
-        bg = "sprites/bg1.png";
+    if(hour>=06 && hour<=19){
+       
+        bg ="sprites/bg1.png" ;
     }
     else{
         bg = "sprites/bg2.jpg";
     }
 
     backgroundImg = loadImage(bg);
-    console.log(backgroundImg);
-}
+    
+} 
